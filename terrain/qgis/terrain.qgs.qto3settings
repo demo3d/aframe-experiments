@@ -1,0 +1,45 @@
+{
+  "CTRL": {
+    "comboBox_Controls": "OrbitControls.js"
+  }, 
+  "DEM": {
+    "checkBox_Clip": true, 
+    "checkBox_Frame": false, 
+    "checkBox_Shading": true, 
+    "checkBox_Sides": true, 
+    "checkBox_Surroundings": false, 
+    "checkBox_TransparentBackground": false, 
+    "comboBox_ClipLayer": "schneeberg20160825230843964", 
+    "comboBox_DEMLayer": "schneeberg20160825231230867", 
+    "comboBox_TextureSize": 200, 
+    "horizontalSlider_DEMSize": 2, 
+    "layerImageIds": [
+      "Mapbox_Satellite20160825225831917"
+    ], 
+    "lineEdit_Color": "", 
+    "lineEdit_ImageFile": "", 
+    "lineEdit_centerX": "1758985.61664", 
+    "lineEdit_centerY": "6070467.80495", 
+    "lineEdit_rectHeight": "10385.704245", 
+    "lineEdit_rectWidth": "13168.801461", 
+    "radioButton_LayerImage": true, 
+    "radioButton_Simple": true, 
+    "spinBox_Height": 3, 
+    "spinBox_Roughening": 4, 
+    "spinBox_Size": 5, 
+    "spinBox_demtransp": 0, 
+    "visible": false
+  }, 
+  "OutputFilename": "/home/mat/tmp/qgis/asdf.html", 
+  "POINT": {}, 
+  "POLYGON": {}, 
+  "PluginVersion": "1.4.2", 
+  "Template": "3DViewer(dat-gui).html", 
+  "WORLD": {
+    "lineEdit_BaseSize": "100", 
+    "lineEdit_Color": "", 
+    "lineEdit_zFactor": "1.5", 
+    "lineEdit_zShift": "0", 
+    "radioButton_WGS84": true
+  }
+}
