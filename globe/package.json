@@ -5,10 +5,12 @@
   "dependencies": {
     "aframe": "^0.3.1",
     "aframe-bmfont-text-component": "^0.1.4",
+    "aframe-look-at-component": "^0.1.2",
     "aframe-react": "^2.0.0",
     "babel-polyfill": "^6.3.14",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "world-countries": "^1.7.8"
   },
   "scripts": {
     "build": "webpack",

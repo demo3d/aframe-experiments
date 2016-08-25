@@ -3,32 +3,54 @@
 import 'aframe';
 import 'babel-polyfill';
 import {Animation, Entity, Scene} from 'aframe-react';
+import 'aframe-bmfont-text-component'
+import 'aframe-look-at-component'
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Camera from './components/Camera';
 import Cursor from './components/Cursor';
 import Sky from './components/Sky';
+import Info from './components/Info';
 
+import Countries from 'world-countries'
 
 const LAT = 48.2082,
     LNG = 16.3738
 
-const RADIUS = 100
+const RADIUS = 10
+
+const COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
 
 class BoilerplateScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: 'red'
+      country: null
     }
+
+
+    this.countries = this.props.countries.map((c,i) => {
+
+        const position = AFRAME.utils.coordinates.stringify(
+          this._latLngOnSphere(c.latlng[0], c.latlng[1]))
+
+        return <Entity 
+          key={i}
+          look-at="[camera]"
+          geometry="primitive: box; width: 0.5; height: 0.5" 
+          material={{color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            transparent: 0.5
+          }}
+          onClick={() => this.showInfo(c)}
+          position={position}>
+        </Entity>
+    })
   }
 
-  changeColor = () => {
-    const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
-    this.setState({
-      color: colors[Math.floor(Math.random() * colors.length)],
-    });
+  showInfo = (country) => {
+    this.setState({country})
   }
 
   _latLngOnSphere = (lat, lng) => {
@@ -40,11 +62,13 @@ class BoilerplateScene extends React.Component {
             RADIUS * Math.cos(phi),
             RADIUS * Math.sin(phi) * Math.sin(theta))
 
-        return `${v.x} ${v.y} ${v.z}`
+        return v
     }
 
 
   render () {
+    const country = this.state.country
+
     return (
       <Scene>
         <a-assets>
@@ -53,27 +77,24 @@ class BoilerplateScene extends React.Component {
 
         <Camera><Cursor/></Camera>
 
-        <Sky/>
+        <Sky />
+
 
         <Entity light={{type: 'ambient', color: '#888'}}/>
         <Entity light={{type: 'directional', intensity: 0.5}} position={[-1, 1, 0]}/>
         <Entity light={{type: 'directional', intensity: 1}} position={[1, 1, 0]}/>
 
+        {this.countries}
 
-        <Entity geometry="primitive: box; width: 5; height: 5" 
-          material={{color: this.state.color}}
-          onClick={this.changeColor}
-          position={this._latLngOnSphere(LAT, LNG)}>
-          <Animation attribute="rotation" dur="5000" repeat="indefinite" to="0 360 360"/>
-        </Entity>
-
-        
+        {country && <Info 
+          position={this._latLngOnSphere(country.latlng[0], country.latlng[1])} 
+          country={country} />}
       </Scene>
     );
   }
 }
 
-ReactDOM.render(<BoilerplateScene/>, document.querySelector('.scene-container'));
+ReactDOM.render(<BoilerplateScene countries={Countries}/>, document.querySelector('.scene-container'));
 
 /*
 <Entity geometry="primitive: box" material={{color: this.state.color}}
