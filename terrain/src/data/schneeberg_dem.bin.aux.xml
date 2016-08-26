@@ -1,0 +1,22 @@
+<PAMDataset>
+  <Metadata domain="IMAGE_STRUCTURE">
+    <MDI key="INTERLEAVE">BAND</MDI>
+  </Metadata>
+  <Metadata domain="ENVI">
+    <MDI key="bands">1</MDI>
+    <MDI key="byte_order">0</MDI>
+    <MDI key="data_type">12</MDI>
+    <MDI key="file_type">ENVI Standard</MDI>
+    <MDI key="header_offset">0</MDI>
+    <MDI key="interleave">bsq</MDI>
+    <MDI key="lines">20</MDI>
+    <MDI key="samples">20</MDI>
+  </Metadata>
+  <Metadata>
+    <MDI key="AREA_OR_POINT">Area</MDI>
+    <MDI key="TIFFTAG_ARTIST">Rechenraum e.U. (http://www.rechenraum.com)</MDI>
+    <MDI key="TIFFTAG_COPYRIGHT">Rechenraum e.U., based on data (c) BEV, 2012, (c) Aster, a product of METI and NASA, and (c) OpenStreetMap</MDI>
+    <MDI key="TIFFTAG_DATETIME">2014-10-03T07:12:25.321506</MDI>
+    <MDI key="TIFFTAG_DOCUMENTNAME">oe3d</MDI>
+  </Metadata>
+</PAMDataset>

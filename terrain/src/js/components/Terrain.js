@@ -3,20 +3,17 @@ import React from 'react';
 
 import 'aframe-terrain-model-component'
 
-
 //const DEM = 'data/noctis-3500-clip-envi.bin'
+//const TEXTURE = 'data/noctis-3500-clip-textureRED-resized.jpg'
 
-const TEXTURE = 'data/noctis-3500-clip-textureRED-resized.jpg'
-
-const DEM = 'data/schneeberg_gdm.tif'
-//const TEXTURE = 'data/schneeberg_texture.png'
+const DEM = 'data/schneeberg_dem.bin'
+const TEXTURE = 'data/schneeberg_texture.jpg'
 
 export default props => (
-  <Entity terrain-model={`DEM: url(${DEM}); 
+  <Entity id="terrain"
+  	terrain-model={`DEM: url(${DEM}); 
   	texture: url(${TEXTURE}); 
-  	planeWidth: 346; planeHeight: 346; 
-  	segmentsWidth: 199; segmentsHeight: 199; zPosition: 100;`}/>
+  	planeWidth: 30; planeHeight: 30; 
+  	segmentsWidth: 19; segmentsHeight: 19; zPosition: 20;
+  	debug: true`}/>
 )
-
-
-//<a-entity terrain-model='DEM: url(data/noctis-3500-clip-envi.bin); texture: url(data/noctis-3500-clip-textureRED-resized.jpg); planeWidth: 346; planeHeight: 346; segmentsWidth: 199; segmentsHeight: 199; zPosition: 100;'></a-entity>

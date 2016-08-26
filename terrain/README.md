@@ -1,37 +1,19 @@
-## aframe-react-boilerplate
+## terrain example
 
-An [aframe-react](https://github.com/ngokevin/aframe-react) boilerplate,
-combining [A-Frame](https://aframe.io) with React.
+To get started load
+* http://basemap.at/downloads/mobac-basemapOfflineDrucken-Anleitung.pdf
+** Install mobac and export png atlas of region to "png + world file"
 
-![](https://cloud.githubusercontent.com/assets/674727/11852092/08f52994-a3eb-11e5-86e1-e7b55bbad02b.png)
+* http://www.oe3d.at/download/
+** Download DEM data
 
-### Getting Started
+* QGis
+** Load png atlas as raster into QGis
+** Load DEM as raster into QGis
+** Do a Raster->Projections->Warp on the DEM raster so that it is the same CRS
+** Do Raster->Extractoin->Clipper and extract area with DEM to tif and PNG Raster to jpg
 
-To get started:
+* Do a gdal_translate -scale 0 2470 0 65535 -ot UInt16 -outsize 20 20 -of ENVI schneeberg_dem.tif schneeberg_dem.bin
+** Set in component the segment size to outsize -1 !!!
 
-```bash
-npm install
-npm run serve
-```
 
-Then head over to `http://localhost:9090`.
-
-### Registering an A-Frame Component
-
-With Webpack's ES6 module syntax:
-
-```
-import 'aframe';
-import 'aframe-example-component';  // Some component on NPM.
-```
-
-### Publishing to GitHub Pages
-
-Ready to show off? Run:
-
-```bash
-npm run ghpages
-```
-
-And share your project on the [A-Frame Slack](http://aframevr.slack.com/) and
-[awesome-aframe](https://github.com/aframevr/awesome-aframe).
