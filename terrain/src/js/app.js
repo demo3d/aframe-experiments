@@ -9,8 +9,9 @@ import Cursor from './components/Cursor';
 import Sky from './components/Sky';
 import Terrain from './components/Terrain';
 
+import randomColor from 'randomcolor'
 
-//require('./components/AlongPath')
+require('./components/AlongPath')
 
 
 class BoilerplateScene extends React.Component {
@@ -31,17 +32,6 @@ class BoilerplateScene extends React.Component {
     var curve = new THREE.QuadraticBezierCurve3(v1, v2, v3);
     var points = curve.getPoints(5) //50
 
-    // walk back and trim the spline until a specified number of units out from the destination
-    /*
-    for (var i = points.length - 1; i > 0; i-- ) {
-        if (points[i].distanceTo(v3) > 58) {
-            break;
-        } else {
-            points.splice(i, 1);
-        }
-    }
-    */
-
     return points;
 }
 _getBezierMidpoint(v1, v3) {
@@ -56,55 +46,52 @@ _getBezierMidpoint(v1, v3) {
     return v2;
 }
 
-  flyToPOI = (e) => {
-    console.log("cl")
-    this.setState({
-      poi: e.target
-    });
-  };
+  flyToPOI= (e) => {
+
+    const camera = document.querySelector('[camera]')
+    console.log(camera.components)
+
+      const startPos = AFRAME.utils.coordinates.parse(camera.getAttribute('position'))
+      const poi = e.target
+      const endPos = AFRAME.utils.coordinates.parse(poi.getAttribute('position'))
+      let path = this._makeBezierCurve(startPos, endPos)
+      path = path.map(AFRAME.utils.coordinates.stringify).join(',')
+
+    camera.setAttribute('alongpath', 'path', path)
+
+    camera.components.alongpath.play()
+
+    camera.emit('fly')
+  }
 
   render () {
 
-    let path = null
-
-    if (this.state.poi) {
-
-      const camera = document.querySelector('[camera]')
-      const startPos = AFRAME.utils.coordinates.parse(camera.getAttribute('position'))
-      const poi = this.state.poi
-      const endPos = AFRAME.utils.coordinates.parse(poi.getAttribute('position'))
-      console.log("bef")
-      path = this._makeBezierCurve(startPos, endPos)
-      
-
-      console.log(path)
-      console.log(path.map(coordinates.stringify).join(' '))
-
-      //"path:-10,0,10 -5,5,5 0,0,0 5,-5,5 10,0,10; closed:true; dur:2000
-    }
-
-    
-
     return (
       <Scene stats={false} inspector="url: https://aframe.io/releases/0.3.0/aframe-inspector.min.js">
-        <Camera position="0 15 -10" rotation="0 180 0">
+        <Camera alongpath="" position="0 15 -10" rotation="0 180 0">
+            <a-animation attribute="alongpath.animation"
+               dur="2000"
+               fill="forwards"
+               to="1"
+               begin="fly"
+               repeat="0"></a-animation>
           <Cursor/>
         </Camera>
 
 
         <Entity light={{type: 'ambient', color: '#fff'}}/>
         
-        <Terrain />
 
-        <Entity id="markerLeft" geometry="primitive: box" material={{color: "red"}}
+
+        <Entity id="markerLeft" geometry="primitive: box" material={{color: randomColor()}}
                   position="12 11 12"
                   onClick={this.flyToPOI} />
 
-        <Entity id="markerTop" geometry="primitive: box" material={{color: "red"}}
+        <Entity id="markerTop" geometry="primitive: box" material={{color: randomColor()}}
                   position="0 16 -4"
                   onClick={this.flyToPOI} />
 
-        <Entity id="markerRight" geometry="primitive: box" material={{color: "red"}}
+        <Entity id="markerRight" geometry="primitive: box" material={{color: randomColor()}}
                   position="14 6 -13"
                   onClick={this.flyToPOI} />
       </Scene>
