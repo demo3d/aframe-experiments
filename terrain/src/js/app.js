@@ -30,9 +30,10 @@ class BoilerplateScene extends React.Component {
     var v2 = this._getBezierMidpoint(v1, v3);
 
     var curve = new THREE.QuadraticBezierCurve3(v1, v2, v3);
-    var points = curve.getPoints(5) //50
+    var points = curve.getPoints(3) //50
 
-    return points;
+    //return points;
+    return [v1, v2, v3]
 }
 _getBezierMidpoint(v1, v3) {
     var d = v1.distanceTo(v3);
@@ -42,7 +43,8 @@ _getBezierMidpoint(v1, v3) {
     v2.z = (v1.z + v3.z) / 2;
 
     // Add a value to z, determined by distance, to give a nice curve shape
-    v2.z = v2.z + d / 4;
+    v2.z += d / 4;
+    v2.y += d / 8
     return v2;
 }
 
@@ -58,9 +60,7 @@ _getBezierMidpoint(v1, v3) {
       path = path.map(AFRAME.utils.coordinates.stringify).join(',')
 
     camera.setAttribute('alongpath', 'path', path)
-
     camera.components.alongpath.play()
-
     camera.emit('fly')
   }
 
@@ -70,7 +70,7 @@ _getBezierMidpoint(v1, v3) {
       <Scene stats={false} inspector="url: https://aframe.io/releases/0.3.0/aframe-inspector.min.js">
         <Camera alongpath="" position="0 15 -10" rotation="0 180 0">
             <a-animation attribute="alongpath.animation"
-               dur="2000"
+               dur="5000"
                fill="forwards"
                to="1"
                begin="fly"
@@ -81,18 +81,23 @@ _getBezierMidpoint(v1, v3) {
 
         <Entity light={{type: 'ambient', color: '#fff'}}/>
         
+        <Terrain />
 
 
         <Entity id="markerLeft" geometry="primitive: box" material={{color: randomColor()}}
-                  position="12 11 12"
+                  position="12 12 12"
                   onClick={this.flyToPOI} />
 
         <Entity id="markerTop" geometry="primitive: box" material={{color: randomColor()}}
-                  position="0 16 -4"
+                  position="0 17 -4"
+                  onClick={this.flyToPOI} />
+
+      <Entity id="markerTop2" geometry="primitive: box" material={{color: randomColor()}}
+                  position="7 16 5"
                   onClick={this.flyToPOI} />
 
         <Entity id="markerRight" geometry="primitive: box" material={{color: randomColor()}}
-                  position="14 6 -13"
+                  position="14 7 -13"
                   onClick={this.flyToPOI} />
       </Scene>
     );

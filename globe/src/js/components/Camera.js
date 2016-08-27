@@ -4,7 +4,7 @@ import React from 'react';
 export default props => (
   <Entity>
     <Entity camera="" 
-    	look-controls={true} 
+    	look-controls=""
     	{...props}/>
   </Entity>
 );
