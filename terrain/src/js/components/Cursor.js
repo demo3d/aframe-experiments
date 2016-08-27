@@ -14,9 +14,13 @@ export default props => {
     transparent: true
   };
   return (
-    <Entity cursor={props} geometry={geometry} material={material} position="0 0 -1">
+    <Entity 
+      cursor={props}
+      geometry={geometry} material={material} position="0 0 -1">
       <Animation attribute="scale" begin="click" dur="150" fill="backwards"
                  to="0 0 0"/>
+      <Animation begin="cursor-fusing" easing="ease-in" attribute="scale"
+               fill="forwards" from="1 1 1" to="0.1 0.1 0.1" />
     </Entity>
-  );
+  )
 }

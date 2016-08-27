@@ -76,7 +76,9 @@ class BoilerplateScene extends React.Component {
           <img id="earth-texture" src="images/earth4096.jpg" />
         </a-assets>
 
-        <Camera><Cursor/></Camera>
+        <Camera>
+          <Cursor fuse={true} timeout={200}/>
+        </Camera>
 
         <Sky />
 

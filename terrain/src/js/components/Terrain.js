@@ -14,6 +14,6 @@ export default props => (
   	terrain-model={`DEM: url(${DEM}); 
   	texture: url(${TEXTURE}); 
   	planeWidth: 30; planeHeight: 30; 
-  	segmentsWidth: 19; segmentsHeight: 19; zPosition: 20;
+  	segmentsWidth: 39; segmentsHeight: 39; zPosition: 20;
   	debug: false`}/>
 )

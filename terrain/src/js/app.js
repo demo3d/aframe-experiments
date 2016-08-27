@@ -75,7 +75,7 @@ _getBezierMidpoint(v1, v3) {
                to="1"
                begin="fly"
                repeat="0"></a-animation>
-          <Cursor/>
+          <Cursor fuse={true} timeout={400}/>
         </Camera>
 
 
@@ -98,6 +98,11 @@ _getBezierMidpoint(v1, v3) {
 
         <Entity id="markerRight" geometry="primitive: box" material={{color: randomColor()}}
                   position="14 7 -13"
+                  onClick={this.flyToPOI} />
+
+
+        <Entity id="markerBehind" geometry="primitive: box" material={{color: randomColor()}}
+                  position="-12 13 -14"
                   onClick={this.flyToPOI} />
       </Scene>
     );
