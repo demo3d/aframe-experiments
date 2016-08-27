@@ -39,7 +39,7 @@ class BoilerplateScene extends React.Component {
         return <Entity 
           key={i}
           look-at="[camera]"
-          geometry="primitive: box; width: 0.3; height: 0.3" 
+          geometry="primitive: box; width: 0.6; height: 0.6" 
           material={{
             color: randomColor(),
             transparent: 0.5
