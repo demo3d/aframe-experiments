@@ -73,7 +73,7 @@ class BoilerplateScene extends React.Component {
     return (
       <Scene>
         <a-assets>
-          <img id="earth-texture" src="images/earth4096.jpg" />
+          <img id="earth-texture" src="images/earth2048.jpg" />
         </a-assets>
 
         <Camera>
