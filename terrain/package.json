@@ -16,7 +16,8 @@
     "preghpages": "npm run build && rm -rf gh-pages && cp -r src gh-pages && cp index.html build/bundle.js gh-pages",
     "ghpages": "npm run preghpages && ghpages -p gh-pages",
     "gh-pages": "npm run ghpages",
-    "serve": "webpack-dev-server --content-base src --progress --watch --history-api-fallback --inline --hot --host 0.0.0.0 --port 9090"
+    "serve": "webpack-dev-server --content-base src --progress --watch --history-api-fallback --inline --hot --host 0.0.0.0 --port 9090",
+    "deploy": "npm run preghpages && cp CNAME gh-pages/ && surge -p ."
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "ghpages": "0.0.3",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.0",
+    "surge": "^0.18.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   }

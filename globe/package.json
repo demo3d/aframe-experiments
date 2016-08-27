@@ -1,5 +1,5 @@
 {
-  "name": "aframe-react-boilerplate",
+  "name": "aframe-experiments-globe",
   "version": "1.0.0",
   "description": "Boilerplate for using A-Frame with React.",
   "dependencies": {
@@ -19,7 +19,7 @@
     "ghpages": "npm run preghpages && ghpages -p gh-pages",
     "gh-pages": "npm run ghpages",
     "serve": "webpack-dev-server --content-base src --progress --watch --history-api-fallback --inline --hot --host 0.0.0.0 --port 9090",
-    "deploy": "cp build/build.js . && surge -p ."
+    "deploy": "npm run preghpages && cp CNAME gh-pages/ && surge -p ."
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "mozvr",
     "webvr"
   ],
-  "author": "Kevin Ngo <kngo@mozilla.com>",
+  "author": "Matthias Treitler Ngo <kngo@mozilla.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ngokevin/aframe-react-boilerplate/issues"
