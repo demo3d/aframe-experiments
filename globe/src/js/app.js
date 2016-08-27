@@ -16,12 +16,12 @@ import Info from './components/Info';
 
 import Countries from 'world-countries'
 
+import randomColor from 'randomcolor'
+
 const LAT = 48.2082,
     LNG = 16.3738
 
 const RADIUS = 10
-
-const COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
 
 class BoilerplateScene extends React.Component {
   constructor(props) {
@@ -39,8 +39,9 @@ class BoilerplateScene extends React.Component {
         return <Entity 
           key={i}
           look-at="[camera]"
-          geometry="primitive: box; width: 0.5; height: 0.5" 
-          material={{color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          geometry="primitive: box; width: 0.3; height: 0.3" 
+          material={{
+            color: randomColor(),
             transparent: 0.5
           }}
           onClick={() => this.showInfo(c)}
@@ -81,8 +82,6 @@ class BoilerplateScene extends React.Component {
 
 
         <Entity light={{type: 'ambient', color: '#888'}}/>
-        <Entity light={{type: 'directional', intensity: 0.5}} position={[-1, 1, 0]}/>
-        <Entity light={{type: 'directional', intensity: 1}} position={[1, 1, 0]}/>
 
         {this.countries}
 
