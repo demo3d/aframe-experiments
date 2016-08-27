@@ -1,5 +1,5 @@
 {
-  "name": "aframe-experiments-globe",
+  "name": "aframe-experiments-terrain",
   "version": "1.0.0",
   "description": "Boilerplate for using A-Frame with React.",
   "dependencies": {
@@ -7,6 +7,7 @@
     "aframe-bmfont-text-component": "^0.1.4",
     "aframe-look-at-component": "^0.1.2",
     "aframe-react": "^2.0.0",
+    "aframe-terrain-model-component": "^0.1.0",
     "babel-polyfill": "^6.3.14",
     "randomcolor": "^0.4.4",
     "react": "^0.14.3",

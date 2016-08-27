@@ -23,8 +23,6 @@ AFRAME.registerComponent('alongpath', {
     },
 
     update: function(oldData) {
-        console.log("update")
-        console.log(this.data.animation)
         var d = this.data;
         var points = d.path.map(vec3 => {
             return new THREE.Vector3(

@@ -81,6 +81,7 @@ _getBezierMidpoint(v1, v3) {
 
         <Entity light={{type: 'ambient', color: '#fff'}}/>
         
+        <Sky />
         <Terrain />
 
 
