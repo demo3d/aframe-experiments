@@ -13,8 +13,9 @@ import Camera from './components/Camera';
 import Cursor from './components/Cursor';
 import Sky from './components/Sky';
 import Info from './components/Info';
+import CountryGlobe from './components/CountryGlobe';
 
-import Countries from 'world-countries'
+import WorldCountries from 'world-countries'
 
 import randomColor from 'randomcolor'
 
@@ -74,33 +75,37 @@ class BoilerplateScene extends React.Component {
       <Scene>
         <a-assets>
           <img id="earth-texture" src="images/earth2048.jpg" />
+          <img id="earth-map" src="images/earth-day.jpg" />
+          <img id="earth-index" src="images/earth-index.png" />
+          <img id="earth-outline" src="images/earth-outline.png" />
         </a-assets>
 
         <Camera>
-          <Cursor fuse={true} timeout={200}/>
+          <Cursor fuse={true} fuseTimeout={200}/>
         </Camera>
 
-        <Sky />
-
+        
 
         <Entity light={{type: 'ambient', color: '#888'}}/>
 
-        {this.countries}
+        <CountryGlobe 
+          srcMap="#earth-map" 
+          srcOutline="#earth-outline" 
+          srcIndex="#earth-index"
+          />
 
-        {country && <Info 
-          position={this._latLngOnSphere(country.latlng[0], country.latlng[1])} 
-          country={country} />}
       </Scene>
     );
   }
 }
 
-ReactDOM.render(<BoilerplateScene countries={Countries}/>, document.querySelector('.scene-container'));
+ReactDOM.render(<BoilerplateScene countries={WorldCountries}/>, document.querySelector('.scene-container'));
 
 /*
-<Entity geometry="primitive: box" material={{color: this.state.color}}
-                onClick={this.changeColor}
-                position="0 0 -5">
-          <Animation attribute="rotation" dur="5000" repeat="indefinite" to="0 360 360"/>
-        </Entity>
-  */      
+<Sky />
+        {this.countries}
+
+        {country && <Info 
+          position={this._latLngOnSphere(country.latlng[0], country.latlng[1])} 
+          country={country} />}
+          */

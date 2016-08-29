@@ -11,6 +11,7 @@
     "randomcolor": "^0.4.4",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
+    "run-parallel": "^1.1.6",
     "world-countries": "^1.7.8"
   },
   "scripts": {
