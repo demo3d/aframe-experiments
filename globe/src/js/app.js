@@ -23,17 +23,6 @@ const LAT = 48.2082,
 
 const RADIUS = 1
 
-AFRAME.registerComponent('cursor-listener', {
-  init: function () {
-    var COLORS = ['red', 'green', 'blue'];
-    this.el.addEventListener('click', function () {
-      var randomIndex = Math.floor(Math.random() * COLORS.length);
-      this.setAttribute('material', 'color', COLORS[randomIndex]);
-      console.log('I was clicked!');
-    });
-  }
-});
-
 class BoilerplateScene extends React.Component {
   constructor(props) {
     super(props);
@@ -122,12 +111,4 @@ ReactDOM.render(<BoilerplateScene countries={WorldCountries}/>, document.querySe
         {country && <Info 
           position={this._latLngOnSphere(country.latlng[0], country.latlng[1])} 
           country={country} />}
-
-
-
-          <CountryGlobe 
-          srcMap="#earth-map" 
-          srcOutline="#earth-outline" 
-          srcIndex="#earth-index"
-          />
           */

@@ -5,11 +5,13 @@ const parallel = require('run-parallel')
 const VS = `
 varying vec3 vNormal;
 varying vec2 vUv;
+varying vec2 vfUv;
 void main()
 {
     gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
     vNormal = normalize( normalMatrix * normal );
-    vUv = uv;
+    vUv = vec2(1.-uv.s, uv.t);
+    //vUv = uv;
 }
 `
 
@@ -26,13 +28,12 @@ void main()
     float indexedColor = mapColor.y;       
     vec2 lookupUV = vec2( indexedColor, 0.0 );
     vec4 lookupColor = texture2D( lookup, lookupUV );                              
+
     vec4 outlineColor = texture2D( outline, vUv );
     vec4 blendColor = texture2D( blendImage, vUv );
     // if (outlineColor.x > 0.1) outlineColor = vec4(1.0,1.0,1.0,1.0);
 
-    
     gl_FragColor = 0.5 * outlineColor + 1.0 * lookupColor + 0.5 * blendColor;
-    //gl_FragColor = vec4(1.,0.,0.,1.);
 }
 `
 const RADIUS = 10
@@ -64,13 +65,6 @@ AFRAME.registerComponent('country-globe', {
         this.lookupTexture.minFilter = THREE.NearestFilter;
         this.lookupTexture.needsUpdate = true;
 
-        /*
-            this.el.addEventListener('click', function () {
-      var randomIndex = Math.floor(Math.random() * COLORS.length);
-      this.setAttribute('material', 'color', COLORS[randomIndex]);
-      console.log('I was clicked!');
-    });
-    */
     },
 
     _doUpdate: function(mapTexture, outlineTexture, indexTexture) {
@@ -107,6 +101,8 @@ AFRAME.registerComponent('country-globe', {
         mesh.position.set(0, 0, 0)
         mesh.scale.set(1, 1, 1)
 
+        mesh.material.needsUpdate = true
+
         this.el.setObject3D('mesh', mesh)
 
         const mapCanvas = document.createElement('canvas');
@@ -115,23 +111,17 @@ AFRAME.registerComponent('country-globe', {
         this.mapContext = mapCanvas.getContext('2d');
         const imageObj = new Image();
         imageObj.onload = () => {
+            // flip drawing texture along x axis
+            this.mapContext.translate(4096, 0);
+            this.mapContext.scale(-1,1)
+            // end flip
             this.mapContext.drawImage(imageObj, 0, 0);
 
         };
-        imageObj.src = this.data.srcIndex //'images/earth-index-shifted-gray.png';
+        imageObj.src = this.data.srcIndex
 
 
         this.el.addEventListener('click', e => this._clicked(e))
-
-/*
-        this.el.addEventListener('raycaster-intersected', function (evt) {
-              console.log("intersect")
-            });
-            */
-
-
-        //this.lookupTexture.needsUpdate = true;
-
     },
 
     update: function(oldData) {
@@ -147,12 +137,6 @@ AFRAME.registerComponent('country-globe', {
         ], (err, [mapTexture, outlineTexture, indexTexture]) => {
             if (err) console.log(err) //return fatal(err)
 
-            mapTexture.magFilter = THREE.NearestFilter;
-            mapTexture.minFilter = THREE.NearestFilter;
-            mapTexture.needsUpdate = true;
-
-            outlineTexture.needsUpdate = true;
-
             this._doUpdate(mapTexture, outlineTexture, indexTexture)
         })
 
@@ -160,19 +144,19 @@ AFRAME.registerComponent('country-globe', {
     },
 
     _clicked: function(event) {
+        
         const raycaster = this.data.raycaster.components.raycaster
         const threeRaycaster = raycaster.raycaster
-        
+
         var countryCode = -1;
 
-        var intersectionList = threeRaycaster.intersectObject( this.el.object3DMap.mesh )
-        if (intersectionList.length > 0 )
-        {
+        var intersectionList = threeRaycaster.intersectObject(this.el.object3DMap.mesh)
+        console.log(intersectionList)
+        if (intersectionList.length > 0) {
             const data = intersectionList[0];
 
-//        if (raycaster.intersectedEls.length > 0) {
+            //if (raycaster.intersectedEls.length > 0) {
             //const data = raycaster.intersectedEls[0]
-            console.log(data)
             var d = data.point.clone().normalize();
             var u = Math.round(4096 * (1 - (0.5 + Math.atan2(d.z, d.x) / (2 * Math.PI))));
             var v = Math.round(2048 * (0.5 - Math.asin(d.y) / Math.PI));
