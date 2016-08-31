@@ -5,15 +5,14 @@ import 'babel-polyfill';
 import {Animation, Entity, Scene} from 'aframe-react';
 import 'aframe-bmfont-text-component'
 import 'aframe-look-at-component'
+import 'aframe-event-set-component'
+import 'aframe-animation-component'
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Camera from './components/Camera';
-import Cursor from './components/Cursor';
-import Sky from './components/Sky';
 import Info from './components/Info';
-import CountryGlobe from './components/CountryGlobe';
+import './components/country-globe';
 
 import WorldCountries from 'world-countries'
 
@@ -22,7 +21,18 @@ import randomColor from 'randomcolor'
 const LAT = 48.2082,
     LNG = 16.3738
 
-const RADIUS = 10
+const RADIUS = 1
+
+AFRAME.registerComponent('cursor-listener', {
+  init: function () {
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('click', function () {
+      var randomIndex = Math.floor(Math.random() * COLORS.length);
+      this.setAttribute('material', 'color', COLORS[randomIndex]);
+      console.log('I was clicked!');
+    });
+  }
+});
 
 class BoilerplateScene extends React.Component {
   constructor(props) {
@@ -80,19 +90,23 @@ class BoilerplateScene extends React.Component {
           <img id="earth-outline" src="images/earth-outline.png" />
         </a-assets>
 
-        <Camera>
-          <Cursor fuse={true} fuseTimeout={200}/>
-        </Camera>
-
+        <a-entity camera look-controls>
+          <a-cursor 
+            id="cursor"
+            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+            animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+            event-set__1="_event: mouseenter; color: springgreen"
+            event-set__2="_event: mouseleave; color: black">
+          </a-cursor>
+        </a-entity>
         
 
-        <Entity light={{type: 'ambient', color: '#888'}}/>
+        <Entity light={{type: 'ambient', color: '#fff'}}/>
 
-        <CountryGlobe 
-          srcMap="#earth-map" 
-          srcOutline="#earth-outline" 
-          srcIndex="#earth-index"
-          />
+        
+        
+        <a-entity country-globe="srcMap: #earth-map; srcOutline: #earth-outline; srcIndex: #earth-index; raycaster: #cursor" > 
+        </a-entity>
 
       </Scene>
     );
@@ -108,4 +122,12 @@ ReactDOM.render(<BoilerplateScene countries={WorldCountries}/>, document.querySe
         {country && <Info 
           position={this._latLngOnSphere(country.latlng[0], country.latlng[1])} 
           country={country} />}
+
+
+
+          <CountryGlobe 
+          srcMap="#earth-map" 
+          srcOutline="#earth-outline" 
+          srcIndex="#earth-index"
+          />
           */

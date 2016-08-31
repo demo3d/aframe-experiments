@@ -75,7 +75,7 @@ _getBezierMidpoint(v1, v3) {
                to="1"
                begin="fly"
                repeat="0"></a-animation>
-          <Cursor fuse={true} timeout={400}/>
+          <Cursor fuse={true} fuseTimeout={400}/>
         </Camera>
 
 
