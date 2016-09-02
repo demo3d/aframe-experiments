@@ -5,7 +5,6 @@
   "dependencies": {
     "aframe": "^0.3.1",
     "aframe-bmfont-text-component": "^0.1.4",
-    "aframe-look-at-component": "^0.1.2",
     "aframe-react": "^2.0.0",
     "babel-polyfill": "^6.3.14",
     "k-frame": "^0.3.2-beta2",
