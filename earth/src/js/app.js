@@ -31,17 +31,13 @@ class BoilerplateScene extends React.Component {
         const position = AFRAME.utils.coordinates.stringify(
           this._latLngOnSphere(c.latlng[0], c.latlng[1]))
 
-        return <Entity
+        return <a-box
           key={i}
-          look-at="[camera]"
-          geometry="primitive: box; width: 0.6; height: 0.6"
-          material={{
-            color: randomColor(),
-            transparent: 0.5
-          }}
-          onClick={() => this.showInfo(c)}
+          width="0.01"
+          height="0.01"
+          depth="0.03"
           position={position}>
-        </Entity>
+        </a-box>
     })
   }
 
@@ -83,6 +79,8 @@ class BoilerplateScene extends React.Component {
           srcBump: #earth-bump;
           camera: [camera];
           `}></a-entity>
+
+        {this.countries}
 
         <a-entity camera look-controls wasd-controls position="0 0 2">
           <a-cursor id="cursor"

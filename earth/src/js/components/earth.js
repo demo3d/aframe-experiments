@@ -48,6 +48,11 @@ AFRAME.registerComponent('earth', {
     init: function() {
         this.loader = new THREE.TextureLoader()
         console.log(this.data.camera)
+
+        const pos = this._latLngOnSphere(LAT, LNG)
+        console.log(pos)
+
+        //this.data.camera.setAttribute('position', AFRAME.utils.coordinates.stringify({x: pos.x, y: pos.y, z: pos.z}))
     },
 
     _doUpdate: function(atmosphereTexture, cloudsTexture, normalTexture, bumpTexture) {
@@ -55,7 +60,7 @@ AFRAME.registerComponent('earth', {
         const textureLoader = this.loader
 
 
-        const tilt = 0.41,
+        const tilt = 0,
             cloudsScale = 1.005,
             atmoScale = 1.2
 
