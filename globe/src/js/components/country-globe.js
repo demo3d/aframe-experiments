@@ -1,5 +1,7 @@
 import CountryColorMap from './CountryColorMap'
 
+import WorldCountries from 'world-countries'
+
 const parallel = require('run-parallel')
 
 const VS = `
@@ -36,7 +38,7 @@ void main()
     gl_FragColor = 0.5 * outlineColor + 1.0 * lookupColor + 0.5 * blendColor;
 }
 `
-const RADIUS = 10
+const RADIUS = 3
 
 AFRAME.registerComponent('country-globe', {
     schema: {
@@ -50,6 +52,9 @@ AFRAME.registerComponent('country-globe', {
             type: 'src'
         },
         raycaster: {
+            type: 'selector'
+        },
+        text: {
             type: 'selector'
         }
     },
@@ -122,6 +127,8 @@ AFRAME.registerComponent('country-globe', {
 
 
         this.el.addEventListener('click', e => this._clicked(e))
+
+        //this.data.raycaster.components.raycaster.addEventListener
     },
 
     update: function(oldData) {
@@ -143,15 +150,33 @@ AFRAME.registerComponent('country-globe', {
 
     },
 
+      _latLngOnSphere: function(lat, lng)  {
+        const phi = (90 - lat) * Math.PI / 180,
+            //theta = (lng + 180) * Math.PI / 180
+            theta = (lng) * Math.PI / 180
+
+        const v = new THREE.Vector3(
+            RADIUS * Math.sin(phi) * Math.cos(theta),
+            RADIUS * Math.cos(phi),
+            RADIUS * Math.sin(phi) * Math.sin(theta))
+
+        return v.divideScalar(3)
+    },
+
+
     _clicked: function(event) {
+        console.log("clicked")
+        event.preventDefault()
         
+
+
         const raycaster = this.data.raycaster.components.raycaster
         const threeRaycaster = raycaster.raycaster
 
         var countryCode = -1;
 
         var intersectionList = threeRaycaster.intersectObject(this.el.object3DMap.mesh)
-        console.log(intersectionList)
+        //console.log(intersectionList)
         if (intersectionList.length > 0) {
             const data = intersectionList[0];
 
@@ -165,8 +190,25 @@ AFRAME.registerComponent('country-globe', {
 
             for (var prop in CountryColorMap) {
                 if (CountryColorMap.hasOwnProperty(prop)) {
-                    if (CountryColorMap[prop] === countryCode)
-                        console.log(prop, countryCode);
+                    if (CountryColorMap[prop] === countryCode) {
+                        console.log(prop)
+                        const _countries = WorldCountries.filter((c) => {
+                            return c.cca2 === prop
+                        })
+                        if (_countries.length == 1) {
+                            const country = _countries[0]
+                            console.log(country)
+                            console.log(this.data.text)
+                            this.data.text.setAttribute('text', country.name.common)
+                            this.data.text.setAttribute('visible', true)
+                            this.data.text.setAttribute('position', 
+                                this._latLngOnSphere(country.latlng[0], country.latlng[1]))
+                            
+                        }
+
+
+                    }
+                        
                 }
             } // end for loop
 

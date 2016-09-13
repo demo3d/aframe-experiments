@@ -11,64 +11,12 @@ import 'aframe-animation-component'
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Info from './components/Info';
 import './components/country-globe';
 
-import WorldCountries from 'world-countries'
-
-import randomColor from 'randomcolor'
-
-const LAT = 48.2082,
-    LNG = 16.3738
-
-const RADIUS = 1
 
 class BoilerplateScene extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      country: null
-    }
-
-
-    this.countries = this.props.countries.map((c,i) => {
-
-        const position = AFRAME.utils.coordinates.stringify(
-          this._latLngOnSphere(c.latlng[0], c.latlng[1]))
-
-        return <Entity 
-          key={i}
-          look-at="[camera]"
-          geometry="primitive: box; width: 0.6; height: 0.6" 
-          material={{
-            color: randomColor(),
-            transparent: 0.5
-          }}
-          onClick={() => this.showInfo(c)}
-          position={position}>
-        </Entity>
-    })
-  }
-
-  showInfo = (country) => {
-    this.setState({country})
-  }
-
-  _latLngOnSphere = (lat, lng) => {
-        const phi = (90 - lat) * Math.PI / 180,
-            theta = (lng + 180) * Math.PI / 180
-
-        const v = new THREE.Vector3(
-            RADIUS * Math.sin(phi) * Math.cos(theta),
-            RADIUS * Math.cos(phi),
-            RADIUS * Math.sin(phi) * Math.sin(theta))
-
-        return v
-    }
-
 
   render () {
-    const country = this.state.country
 
     return (
       <Scene>
@@ -82,6 +30,7 @@ class BoilerplateScene extends React.Component {
         <a-entity camera look-controls>
           <a-cursor 
             id="cursor"
+            fuse={true}
             animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
             animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
             event-set__1="_event: mouseenter; color: springgreen"
@@ -92,23 +41,19 @@ class BoilerplateScene extends React.Component {
 
         <Entity light={{type: 'ambient', color: '#fff'}}/>
 
+        *<a-box color="tomato" scale="0.2 0.2 0.2" position="0 0 -2" onClick={_ => console.log("box clicked")}/>
         
-        
-        <a-entity country-globe="srcMap: #earth-map; srcOutline: #earth-outline; srcIndex: #earth-index; raycaster: #cursor" > 
+        <a-text look-at="[camera]" color="#fff" scale="0.5 0.5 0.5" id="countryText" position="0 0 -2" visible="false" text=""></a-text> 
+
+        <a-entity country-globe="srcMap: #earth-map; srcOutline: #earth-outline; srcIndex: #earth-index; raycaster: #cursor; text: #countryText" > 
         </a-entity>
+
+        
+
 
       </Scene>
     );
   }
 }
 
-ReactDOM.render(<BoilerplateScene countries={WorldCountries}/>, document.querySelector('.scene-container'));
-
-/*
-<Sky />
-        {this.countries}
-
-        {country && <Info 
-          position={this._latLngOnSphere(country.latlng[0], country.latlng[1])} 
-          country={country} />}
-          */
+ReactDOM.render(<BoilerplateScene />, document.querySelector('.scene-container'));
