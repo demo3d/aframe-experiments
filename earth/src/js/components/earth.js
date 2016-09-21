@@ -1,6 +1,6 @@
 const parallel = require('run-parallel')
 
-const RADIUS = 1
+const RADIUS = 3
 
 const FS = `
         uniform float glowIntensity;
@@ -42,6 +42,9 @@ AFRAME.registerComponent('earth', {
         },
         camera: {
           type: 'selector', default: '[camera]'
+        },
+        cameraEntity: {
+          type: 'selector'
         }
     },
 
@@ -50,9 +53,12 @@ AFRAME.registerComponent('earth', {
         console.log(this.data.camera)
 
         const pos = this._latLngOnSphere(LAT, LNG)
+        const posStr = AFRAME.utils.coordinates.stringify({x: pos.x, y: pos.y, z: pos.z})
         console.log(pos)
+        console.log(posStr)
 
-        //this.data.camera.setAttribute('position', AFRAME.utils.coordinates.stringify({x: pos.x, y: pos.y, z: pos.z}))
+        //this.data.camera.setAttribute('position', posStr)
+        //this.data.camera.setAttribute('look-at', "#earth")
     },
 
     _doUpdate: function(atmosphereTexture, cloudsTexture, normalTexture, bumpTexture) {
@@ -81,8 +87,8 @@ AFRAME.registerComponent('earth', {
         const geometry = new THREE.SphereGeometry(RADIUS, 100, 50);
 
         const meshPlanet = new THREE.Mesh(geometry, materialNormalMap);
-        meshPlanet.rotation.y = 0;
-        meshPlanet.rotation.z = tilt;
+        //meshPlanet.rotation.y = 0;
+        //meshPlanet.rotation.z = tilt;
         this.el.setObject3D('mesh', meshPlanet)
 
         // clouds
@@ -92,7 +98,7 @@ AFRAME.registerComponent('earth', {
         })
         const meshClouds = new THREE.Mesh(geometry, materialClouds);
         meshClouds.scale.set(cloudsScale, cloudsScale, cloudsScale);
-        meshClouds.rotation.z = tilt;
+        //meshClouds.rotation.z = tilt;
         //this.el.object3D.add(meshClouds)
 
         // atmosphere
@@ -101,7 +107,7 @@ AFRAME.registerComponent('earth', {
                 glowIntensity: {
                     value: 1
                 },
-                uColor: {
+                uColor: { 
                     value: new THREE.Color().setHSL(204, 67, 55)
                 }
             },
@@ -114,7 +120,7 @@ AFRAME.registerComponent('earth', {
 
         const atmoMesh = new THREE.Mesh(geometry, atmoMaterial)
         atmoMesh.scale.set(atmoScale, atmoScale, atmoScale)
-        this.el.object3D.add(atmoMesh)
+        //this.el.object3D.add(atmoMesh)
 
     },
 
@@ -147,7 +153,7 @@ AFRAME.registerComponent('earth', {
             RADIUS * Math.cos(phi),
             RADIUS * Math.sin(phi) * Math.sin(theta))
 
-        return v
+        return v.multiplyScalar(1.2)
     },
 
 
