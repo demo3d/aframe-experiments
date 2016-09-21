@@ -166,10 +166,8 @@ AFRAME.registerComponent('country-globe', {
 
 
     _clicked: function(event) {
-        console.log("clicked")
-        event.preventDefault()
-        
 
+        const box = document.getElementById("clickBox")
 
         const raycaster = this.data.raycaster.components.raycaster
         const threeRaycaster = raycaster.raycaster
@@ -181,6 +179,15 @@ AFRAME.registerComponent('country-globe', {
         //console.log(intersectionList)
         if (intersectionList.length > 0) {
             const data = intersectionList[0];
+
+            
+                            const x = data.point.x,
+                                y = data.point.y,
+                                z = data.point.z
+            box.setAttribute('position', 
+                AFRAME.utils.coordinates.stringify({x, y, z}))
+
+
 
             //if (raycaster.intersectedEls.length > 0) {
             //intersectedEl = raycaster.intersectedEls[0]
@@ -199,8 +206,10 @@ AFRAME.registerComponent('country-globe', {
                         })
                         if (_countries.length == 1) {
                             const country = _countries[0]
-                            console.log(country)
-                            console.log(this.data.text)
+
+                            
+                            //console.log(country)
+                            //console.log(this.data.text)
                             this.data.text.setAttribute('text', country.name.common)
                             this.data.text.setAttribute('visible', true)
                             this.data.text.setAttribute('position', 
@@ -231,14 +240,6 @@ AFRAME.registerComponent('country-globe', {
         }
 
 
-        console.log(this.data.raycaster)
-        const cursorEl = this.data.raycaster
-
-        //this.data.raycaster.removeState('selected')
-        //this.data.raycaster.onIntersectionCleared(event)
-        //intersectedEl.removeState(STATES.HOVERED);
-        //cursorEl.removeState(STATES.HOVERING);
-        //cursorEl.removeState(STATES.FUSING);
 
     },
 

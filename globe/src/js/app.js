@@ -40,15 +40,16 @@ class BoilerplateScene extends React.Component {
 
         <Entity light={{type: 'ambient', color: '#fff'}}/>
 
-        <a-box visible="false" color="tomato" scale="0.2 0.2 0.2" position="0 0 -2" onClick={_ => console.log("box clicked")}/>
+        <a-box id="clickBox" visible="true" 
+          material="transparent: true; opacity: 0.0;" 
+          scale="0.2 0.2 0.2" 
+          position="0 0 -2" 
+          onClick={_ => console.log("box clicked")}/>
         
         <a-text look-at="[camera]" color="#fff" scale="0.5 0.5 0.5" id="countryText" position="0 0 -2" visible="false" text=""></a-text> 
 
         <a-entity country-globe="srcMap: #earth-map; srcOutline: #earth-outline; srcIndex: #earth-index; raycaster: #cursor; text: #countryText" > 
         </a-entity>
-
-        
-
 
       </Scene>
     );
