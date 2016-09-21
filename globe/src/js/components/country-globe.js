@@ -38,6 +38,7 @@ void main()
 `
 const RADIUS = 10
 
+
 AFRAME.registerComponent('country-globe', {
     schema: {
         srcMap: {
@@ -149,6 +150,7 @@ AFRAME.registerComponent('country-globe', {
         const threeRaycaster = raycaster.raycaster
 
         var countryCode = -1;
+        //let intersectedEl = null
 
         var intersectionList = threeRaycaster.intersectObject(this.el.object3DMap.mesh)
         console.log(intersectionList)
@@ -156,7 +158,7 @@ AFRAME.registerComponent('country-globe', {
             const data = intersectionList[0];
 
             //if (raycaster.intersectedEls.length > 0) {
-            //const data = raycaster.intersectedEls[0]
+            //intersectedEl = raycaster.intersectedEls[0]
             var d = data.point.clone().normalize();
             var u = Math.round(4096 * (1 - (0.5 + Math.atan2(d.z, d.x) / (2 * Math.PI))));
             var v = Math.round(2048 * (0.5 - Math.asin(d.y) / Math.PI));
@@ -185,6 +187,16 @@ AFRAME.registerComponent('country-globe', {
 
             this.lookupTexture.needsUpdate = true
         }
+
+
+        console.log(this.data.raycaster)
+        const cursorEl = this.data.raycaster
+
+        //this.data.raycaster.removeState('selected')
+        //this.data.raycaster.onIntersectionCleared(event)
+        //intersectedEl.removeState(STATES.HOVERED);
+        //cursorEl.removeState(STATES.HOVERING);
+        //cursorEl.removeState(STATES.FUSING);
 
     },
 

@@ -80,10 +80,10 @@ class BoilerplateScene extends React.Component {
         </a-assets>
 
         <a-entity camera look-controls>
-          <a-cursor 
+          <a-cursor  fuse={true}
             id="cursor"
-            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
-            animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 450"
+            animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 2500"
             event-set__1="_event: mouseenter; color: springgreen"
             event-set__2="_event: mouseleave; color: black">
           </a-cursor>
